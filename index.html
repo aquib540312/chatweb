@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Send Message to Flask</title>
+</head>
+<body>
+    <h3>Send Message to Flask Server</h3>
+    <input type="text" id="message" placeholder="Type your message" />
+    <button onclick="sendMessage()">Send</button>
+
+    <p><strong>Server Reply:</strong></p>
+    <div id="replyBox" style="border: 1px solid #ccc; padding: 10px;"></div>
+
+    <script>
+        function sendMessage() {
+            const message = document.getElementById("message").value;
+
+            fetch("https://08dc-51-252-209-191.ngrok-free.app/webhook", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ message: message })
+            })
+            .then(res => res.text())
+            .then(data => {
+                // yahan result page pe dikhayenge
+                document.getElementById("replyBox").innerText = data;
+            })
+            .catch(err => {
+                document.getElementById("replyBox").innerText = "Error: " + err;
+            });
+        }
+    </script>
+</body>
+</html>
